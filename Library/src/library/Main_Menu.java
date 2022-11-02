@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main_Menu {
 	StudentDTO student=null;
+	BookTest bookTest = null;
 	Connection conn;
 	Scanner scanner = new Scanner(System.in);
 	
@@ -28,6 +29,7 @@ public class Main_Menu {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		bookTest = new BookTest();
 	}
 	
 	public int login() {
@@ -227,6 +229,7 @@ public class Main_Menu {
 	public static void main(String[] args) {
 		Main_Menu menu = new Main_Menu();
 		menu.run();
+		menu.bookTest.run();
 	}
 	
 }
