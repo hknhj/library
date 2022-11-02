@@ -34,6 +34,7 @@ public class BookDAO {
 		}
 	}
 	
+	//책 입력하는 함수
 	public void BookInsert() {
 		try {
 			
@@ -58,6 +59,7 @@ public class BookDAO {
 		}
 	}
 	
+	//책 찾는함수
 	public BookDTO BookSearch() {
 		BookDTO book=null;
 		
@@ -89,6 +91,7 @@ public class BookDAO {
 		return book;
 	}
 	
+	//책 수정하는 함수
 	public void BookUpdate(BookDTO book) {
 		System.out.println("[수정 내용 입력]");
 		map = getBookInfo();
@@ -107,6 +110,7 @@ public class BookDAO {
 		}
 	}
 	
+	//책의 정보 입력받는 함수
 	public Map<String,Object> getBookInfo() {
 		Map<String, Object> map = new HashMap<>();
 		
