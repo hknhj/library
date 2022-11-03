@@ -68,7 +68,7 @@ public class BookDAO {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
-			System.out.print("찾고자 하는 책의 제목: ");
+			System.out.print("\n찾고자 하는 책의 제목: ");
 			String title = scanner.nextLine();
 			pstmt.setString(1, title);
 			

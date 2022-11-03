@@ -33,7 +33,7 @@ public class Main_Menu {
 	}
 	
 	public int login() {
-		System.out.println("[로그인]");
+		System.out.println("\n[로그인]");
 		
 		System.out.print("아이디: ");
 		String id = scanner.nextLine();
@@ -49,7 +49,7 @@ public class Main_Menu {
 	}
 	
 	public void signup() {
-		System.out.println("[회원 가입]");
+		System.out.println("\n[회원 가입]");
 		String id="";
 		try {
 			while(true) {
@@ -100,7 +100,7 @@ public class Main_Menu {
 			e.printStackTrace();
 		}
 		
-		System.out.println("등록되었습니다.\n");
+		System.out.println("\n등록되었습니다.\n");
 		
 	}
 	
@@ -187,21 +187,21 @@ public class Main_Menu {
 	public void run() {
 		while(true) {
 			System.out.println("[도서 관리 프로그램]");
-			System.out.println("-----------------------------------------");
-			System.out.println("1.Login | 2.Sign up | 3.Find Id/Password");
-			System.out.println("-----------------------------------------");
+			System.out.println("---------------------------------------------------");
+			System.out.println("1.Login | 2.Sign up | 3.Find Id/Password | 4.Exit");
+			System.out.println("---------------------------------------------------");
 			System.out.print("선택: ");
 			String option = scanner.nextLine();	
 			if(option.equals("1")) {
 				int result = login();
 				
 				if(result==0) {
-					System.out.println("로그인 되었습니다.\n");
+					System.out.println("\n로그인 되었습니다.\n");
 					break;
 				} else if(result==1) {
-					System.out.println("비밀번호가 틀렸습니다.\n");
+					System.out.println("\n비밀번호가 틀렸습니다.\n");
 				} else {
-					System.out.println("잘못된 아이디입니다.\n");
+					System.out.println("\n잘못된 아이디입니다.\n");
 				}
 			} else if(option.equals("2")) {
 				signup();
@@ -214,14 +214,35 @@ public class Main_Menu {
 				if(sub.equals("1")) {
 					String id = findId();
 					if(!id.equals("")) {
-						System.out.println("[id]: "+id+"\n");
+						System.out.println("\n[id]: "+id+"\n");
 					}
 				} else if(sub.equals("2")) {
 					String password = findPassword();
 					if(!password.equals("")) {
-						System.out.println("[password]: "+password+"\n");
+						System.out.println("\n[password]: "+password+"\n");
 					}
 				}
+			} else if(option.equals("4")) {
+				System.out.println("프로그램을 종료합니다.");
+				System.exit(0);
+			} else if(option.equals("9")){
+				System.out.println("\n[관리자]");
+				System.out.println("-----------------------");
+				System.out.println("1.Admin Login | 2.Back");
+				System.out.println("-----------------------");
+				System.out.print("선택: ");
+				String sub = scanner.nextLine();
+				if(sub.equals("1")) {
+					AdminDAO admin = new AdminDAO();
+					admin.run();
+				} else {
+					System.out.println();
+					continue;
+				}
+				
+			} else {
+				System.out.println("\n잘못된 옵션입니다.\n");
+				continue;
 			}
 		}
 	}

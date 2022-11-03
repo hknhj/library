@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//학생은 책 대여, 책 찾기만 가능하도록
 public class StudentDTO {
-	String id;
-	String password;
-	String name;
-	String studentNo;
-	String email;
+	private String id;
+	private String password;
+	private String name;
+	private String studentNo;
+	private String email;
+	//private BookDTO book=null;
 }

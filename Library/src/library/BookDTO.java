@@ -17,10 +17,10 @@ public class BookDTO {
 	@Override
 	public String toString() {
 		String str = "[title] : "+this.title+
-			"\n[author] : "+this.author+
-			"\n[publisher] : "+this.publisher+
-			"\n[price] : "+this.price+
-			"\n[num] : "+this.num;
+			" [author] : "+this.author+
+			" [publisher] : "+this.publisher+
+			" [price] : "+this.price+
+			" [num] : "+this.num;
 		
 		return str;
 	}
