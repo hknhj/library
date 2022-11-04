@@ -3,7 +3,7 @@ package library;
 public class Banner {
 	public static void banner() {
 		System.out.println("-----------------------------------------------");
-		System.out.println("1.BookSearch | 2.Check Out(not ready) | 3.Exit");
+		System.out.println("1.BookSearch | 2.Check Out | 3.Exit");
 		System.out.println("-----------------------------------------------");
 		System.out.print("메뉴: ");
 	}

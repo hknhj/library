@@ -118,7 +118,6 @@ public class BookDAO {
 	 * 2-2. 빌려졌다면 보조메뉴를 출력하고 다시 처음으로 돌아간다.
 	 */
 	public void checkOut() {
-		
 		System.out.println("\n[도서 대출]");
 		while(true) {
 			System.out.print("제목: ");
@@ -131,7 +130,7 @@ public class BookDAO {
 
 				if(rs.next()) {
 					if(rs.getString("name")!=null) {
-						System.out.println("이미 대출된 책입니다.\n");
+						System.out.println("\n이미 대출된 책입니다.\n");
 						System.out.println("-----------------------");
 						System.out.println("1.Continue | 2.Back");
 						System.out.println("-----------------------");
@@ -146,11 +145,12 @@ public class BookDAO {
 						String sql2 = new StringBuilder()
 								.append("UPDATE student SET ")
 								.append("title=? ")
-								.append("WHERE  )
+								.append("WHERE name = ? ")
 								.toString();
 														
 						PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 						pstmt2.setString(1, title);
+						pstmt2.setString(2, this.student.getName());
 						pstmt2.executeUpdate();
 						pstmt2.close();
 						
@@ -163,13 +163,15 @@ public class BookDAO {
 								.append("SELECT name ")
 								.append("FROM student ")
 								.append("WHERE title=?)")
+								.append("WHERE  title = ?")
 								.toString();
 								//"INSERT INTO book(name) "+"SELECT name "+"FROM student "+"WHERE title = ?";
 						PreparedStatement pstmt3 = conn.prepareStatement(sql3);
 						pstmt3.setString(1, title);
+						pstmt3.setString(2, title);
 						pstmt3.executeUpdate();
 						pstmt3.close();
-
+						break;
 					}
 				}
 				
