@@ -10,8 +10,8 @@ import java.sql.Types;
 import java.util.Scanner;
 
 public class Main_Menu {
-	StudentDTO student=null;
-	BookTest bookTest = null;
+	StudentDTO student;
+	BookTest bookTest;
 	Connection conn;
 	Scanner scanner = new Scanner(System.in);
 	
@@ -42,7 +42,10 @@ public class Main_Menu {
 		
 		//아이디 비밀번호 체크
 		int result = check(id, password);
-
+		
+		if(result == 0) {
+			this.student=getStudent(id);
+		}
 		
 		return result;
 		
@@ -131,7 +134,7 @@ public class Main_Menu {
 		try {
 			System.out.print("학번을 입력하세요 : ");
 			String studentno = scanner.nextLine();
-			String sql = ""+"SELECT * "+"FROM student "+"WHERE studentno = ?";
+			String sql = ""+"SELECT id "+"FROM student "+"WHERE studentno = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, studentno);
@@ -160,7 +163,7 @@ public class Main_Menu {
 			String id = scanner.nextLine();
 			System.out.print("학번을 입력하세요: ");
 			String studentno = scanner.nextLine();
-			String sql = ""+"SELECT * "+"FROM student "+"WHERE id = ? AND studentno = ?";
+			String sql = ""+"SELECT password "+"FROM student "+"WHERE id = ? AND studentno = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -182,9 +185,38 @@ public class Main_Menu {
 		
 		return password;
 	}
+	
+	public StudentDTO getStudent(String id) {
+		StudentDTO std = new StudentDTO();
+		try {
+			String sql = ""+ "SELECT * "+"FROM student "+"WHERE id = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				std.setId(rs.getString("id"));
+				std.setPassword(rs.getString("password"));
+				std.setName(rs.getString("name"));
+				std.setStudentNo(rs.getString("studentno"));
+				std.setEmail(rs.getString("email"));
+			}
+			
+			
+			
+			rs.close();
+			pstmt.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return std;
+		
+	}
 
 	
-	public void run() {
+	public void menu() {
 		while(true) {
 			System.out.println("[도서 관리 프로그램]");
 			System.out.println("---------------------------------------------------");
@@ -196,7 +228,8 @@ public class Main_Menu {
 				int result = login();
 				
 				if(result==0) {
-					System.out.println("\n로그인 되었습니다.\n");
+					System.out.println("\n로그인 되었습니다.");
+					System.out.println("환영합니다 ["+this.student.getName()+"] 회원님\n");
 					break;
 				} else if(result==1) {
 					System.out.println("\n비밀번호가 틀렸습니다.\n");
@@ -215,11 +248,15 @@ public class Main_Menu {
 					String id = findId();
 					if(!id.equals("")) {
 						System.out.println("\n[id]: "+id+"\n");
+					} else {
+						System.out.println("\n해당하는 정보가 없습니다.\n");
 					}
 				} else if(sub.equals("2")) {
 					String password = findPassword();
 					if(!password.equals("")) {
 						System.out.println("\n[password]: "+password+"\n");
+					} else {
+						System.out.println("\n해당하는 정보가 없습니다.\n");
 					}
 				}
 			} else if(option.equals("4")) {
@@ -247,10 +284,15 @@ public class Main_Menu {
 		}
 	}
 	
+	public void run() {
+		menu();
+		BookTest bookTest = new BookTest(this.student);
+		bookTest.run(student);
+	}
+	
 	public static void main(String[] args) {
 		Main_Menu menu = new Main_Menu();
 		menu.run();
-		menu.bookTest.run();
 	}
 	
 }

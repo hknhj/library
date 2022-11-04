@@ -14,5 +14,5 @@ public class StudentDTO {
 	private String name;
 	private String studentNo;
 	private String email;
-	//private BookDTO book=null;
+	private String title;
 }

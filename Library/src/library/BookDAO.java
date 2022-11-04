@@ -16,7 +16,9 @@ import java.util.HashMap;
 public class BookDAO {
 	private Connection conn = null;
 	private Scanner scanner = new Scanner(System.in);
+	StudentDTO student;
 	Map<String, Object> map;
+	BookDTO book;
 	
 	public BookDAO() {
 		try {
@@ -108,6 +110,75 @@ public class BookDAO {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/* 1. 책의 이름을 검색한다.
+	 * 2. 책이 누군가에게 빌려졌는지 확인한다.
+	 * 2-1. 빌려지지 않았다면 그 책을 대출한다.(책은 대출상태로 변경하고, 해당 학생 title 인스턴스에 책 제목을 넣는다.
+	 * 2-2. 빌려졌다면 보조메뉴를 출력하고 다시 처음으로 돌아간다.
+	 */
+	public void checkOut() {
+		
+		System.out.println("\n[도서 대출]");
+		while(true) {
+			System.out.print("제목: ");
+			String title = scanner.nextLine();
+			try {
+				String sql = "SELECT name "+ "FROM book "+"WHERE title = ?";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, title);
+				ResultSet rs = pstmt.executeQuery();
+
+				if(rs.next()) {
+					if(rs.getString("name")!=null) {
+						System.out.println("이미 대출된 책입니다.\n");
+						System.out.println("-----------------------");
+						System.out.println("1.Continue | 2.Back");
+						System.out.println("-----------------------");
+						String option = scanner.nextLine();
+						if(option.equals("1")) {
+							continue;
+						} else {
+							break;
+						}
+					} else {
+						//학생이 빌린 책 정보 저장
+						String sql2 = new StringBuilder()
+								.append("UPDATE student SET ")
+								.append("title=? ")
+								.append("WHERE  )
+								.toString();
+														
+						PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+						pstmt2.setString(1, title);
+						pstmt2.executeUpdate();
+						pstmt2.close();
+						
+						
+						
+						//학생이 빌린 책을 통해 검색해서 책 정보에 학생의 이름을 책 정보에 넣는다
+						String sql3 = new StringBuilder()
+								.append("UPDATE book ")
+								.append("SET (name) = (")
+								.append("SELECT name ")
+								.append("FROM student ")
+								.append("WHERE title=?)")
+								.toString();
+								//"INSERT INTO book(name) "+"SELECT name "+"FROM student "+"WHERE title = ?";
+						PreparedStatement pstmt3 = conn.prepareStatement(sql3);
+						pstmt3.setString(1, title);
+						pstmt3.executeUpdate();
+						pstmt3.close();
+
+					}
+				}
+				
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	//책의 정보 입력받는 함수

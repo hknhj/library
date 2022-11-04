@@ -13,14 +13,15 @@ public class BookDTO {
 	private String publisher;
 	private int price;
 	private int num;
+	private String name;
 	
 	@Override
 	public String toString() {
-		String str = "[title] : "+this.title+
-			" [author] : "+this.author+
-			" [publisher] : "+this.publisher+
-			" [price] : "+this.price+
-			" [num] : "+this.num;
+		String str = "[title]: "+this.title+
+			", [author]: "+this.author+
+			", [publisher]: "+this.publisher+
+			", [price]: "+this.price+
+			", [num]: "+this.num;
 		
 		return str;
 	}

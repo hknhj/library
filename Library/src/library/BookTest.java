@@ -5,10 +5,20 @@ import java.util.Scanner;
 public class BookTest {
 	Scanner scanner = new Scanner(System.in);
 	BookDAO bookdao;
+	
+	public BookTest() {
+		
+	}
+	
+	public BookTest(StudentDTO student) {
+		this.bookdao=new BookDAO();
+		this.bookdao.student=student;
+	}
 
-	public void run() {
+	public void run(StudentDTO student) {
 		while(true) {
 			bookdao=new BookDAO();
+			bookdao.student=student;
 			Banner.banner();
 			
 			String option = scanner.nextLine();
@@ -22,7 +32,7 @@ public class BookTest {
 				System.out.println("\n[책 정보]");
 				System.out.println(bookdto.toString()+"\n");
 			} else if(option.equals("2")) {
-				System.out.println("\n준비가 아직 안됐습니다.\n");
+				bookdao.checkOut();
 			} else if(option.equals("3")) {
 				System.out.println("\n프로그램을 종료합니다.");
 				break;
