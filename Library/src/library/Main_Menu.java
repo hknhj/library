@@ -228,13 +228,15 @@ public class Main_Menu {
 				int result = login();
 				
 				if(result==0) {
-					System.out.println("\n로그인 되었습니다.");
-					System.out.println("환영합니다 ["+this.student.getName()+"] 회원님\n");
+					System.out.println("\n로그인 되었습니다.\n");
+					System.out.println("환영합니다 ["+this.student.getName()+"] 회원님");
 					break;
 				} else if(result==1) {
 					System.out.println("\n비밀번호가 틀렸습니다.\n");
+					continue;
 				} else {
 					System.out.println("\n잘못된 아이디입니다.\n");
+					continue;
 				}
 			} else if(option.equals("2")) {
 				signup();
